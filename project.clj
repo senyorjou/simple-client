@@ -12,7 +12,11 @@
                  [cheshire "5.10.0"]
                  [clj-jwt "0.1.1"]
                  [clj-time "0.15.2"]
-                 [lynxeyes/dotenv "1.1.0"]]
+                 [lynxeyes/dotenv "1.1.0"]
+                 [digest "1.4.10"]
+                 [org.clojure/java.jdbc "0.7.11"]
+                 [org.postgresql/postgresql "42.2.18"]
+                 [postgre-types "0.0.4"]]
   
   :repl-options {:init-ns simple-client.core}
   :main simple-client.core)
