@@ -2,18 +2,15 @@
   (:require [digest :refer [sha-1]]
             ;;
             [simple-client.api :refer [get-users]]
-            [simple-client.db :refer [insert-rows]]))
+            [simple-client.db :refer [upsert-rows]]))
 
-(defn users-map
-  "returns a map  {user_id {:origin_id user_id :data payload :hash payload_hash}}"
-  []
-  (into {} (map #(hash-map (get % "id")
-                           {:origin_id (get % "id")
-                            :data %
-                            :hash (sha-1 (str %))})
-                (get-users))))
+
+(defn data-map [data-rows]
+  (for [row data-rows]
+    {:origin_id (get row "id")
+     :data row
+     :hash (sha-1 (str row))}))
 
 (defn -main []
   (println "User management")
-  (let [users (memoize users-map)]
-    (insert-rows :slack_data (vals (users)))))
+  (upsert-rows :slack_data (data-map (get-users))))
