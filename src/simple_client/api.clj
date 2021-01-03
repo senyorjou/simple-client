@@ -8,7 +8,7 @@
   (:use [slingshot.slingshot :only [try+]]))
 
 
-(def LIMIT 100)
+(def LIMIT 500)
 
 (def root-url
   (->
@@ -24,6 +24,9 @@
 
 (def users-url
   (make-url "users.list"))
+
+(def conversations-url
+  (make-url "conversations.list"))
 
 (def acces-token
   (or (env "SLACK_TOKEN")
@@ -60,3 +63,6 @@
 
 (defn get-users []
   (get-data users-url "members"))
+
+(defn get-conversations []
+  (get-data conversations-url "channels"))

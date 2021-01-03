@@ -1,9 +1,8 @@
 (ns simple-client.core
   (:require [digest :refer [sha-1]]
             ;;
-            [simple-client.api :refer [get-users]]
-            [simple-client.db :refer [upsert-rows]]))
-
+            [simple-client.api :refer [get-users get-conversations]]
+            [simple-client.db :as db]))
 
 (defn data-map [data-rows]
   (for [row data-rows]
@@ -13,4 +12,5 @@
 
 (defn -main []
   (println "User management")
-  (upsert-rows :slack_data (data-map (get-users))))
+  (db/upsert-rows :slack_data (data-map (get-users)))
+  (db/upsert-rows :slack_data (data-map (get-conversations))))

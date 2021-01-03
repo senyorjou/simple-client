@@ -5,7 +5,9 @@
             [clj-jwt.key :as key]
             [clj-time.core :as time]
             [clj-http.client :as http]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [dotenv :refer [env]])
+
   (:import java.io.StringReader))
 
 
@@ -15,6 +17,10 @@
   [secrets-json-path]
   (-> secrets-json-path slurp (json/parse-string keyword)))
 
+(defn load-creds-from-env
+  (-> (env "SERVICE_ACCOUNT")
+      (json/parse-string keyword)))
+  
 ;; list of API scopes requested, e.g. https://developers.google.com/admin-sdk/directory/v1/guides/authorizing
 (def scopes ["https://www.googleapis.com/auth/admin.directory.user"
              "https://www.googleapis.com/auth/admin.directory.group"])
