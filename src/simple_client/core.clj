@@ -12,5 +12,5 @@
 
 (defn -main []
   (println "User management")
-  (db/upsert-rows :slack_data (data-map (get-users)))
-  (db/upsert-rows :slack_data (data-map (get-conversations))))
+  (db/upsert-rows "users.list" (data-map (get-users)))
+  (db/upsert-rows "conversations.list" (data-map (get-conversations))))
